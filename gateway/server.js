@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
-const appRouter= require('./lib/app-router');
+const appRouter = require('./lib/app-router');
+const mongoose = require('mongoose');
 
 const server = express();
 
@@ -19,6 +20,10 @@ const config = require('./config')(env, serverPort);
 // LOGGER
 server.use(morgan('combined'));
 
+// DB SETUP
+mongoose.connect('mongodb://localhost:auth/hal');
+
+
 // APP ROUTER
 server.use(config.siteRoot, appRouter(config));
 
@@ -26,7 +31,7 @@ server.listen(config.serverPort, function(error) {
     if (error) {
         console.error(error);
     } else {
-        console.info("==> Listening on port %s in %s mode", config.serverPort,env);
+        console.info("==> Listening on port %s in %s mode", config.serverPort, env);
     }
 });
 

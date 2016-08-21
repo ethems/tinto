@@ -20,6 +20,7 @@
     "express-init": "^1.1.0",
     "lodash": "^4.15.0",
     "moment": "^2.14.1",
+    "mongoose": "^4.5.9",
     "morgan": "^1.7.0",
     "node-uuid": "^1.4.7",
     "react": "^15.3.1",
