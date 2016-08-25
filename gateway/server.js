@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const appRouter = require('./lib/app-router');
-const mongoose = require('mongoose');
+
 
 const server = express();
 
@@ -21,7 +21,11 @@ const config = require('./config')(env, serverPort);
 server.use(morgan('combined'));
 
 // DB SETUP
-mongoose.connect('mongodb://localhost:auth/hal');
+const mongoose = require('./lib/db')(config);
+
+/*  LOCAL HOST
+  mongoose.connect('mongodb://localhost:auth/hal');
+*/
 
 
 // APP ROUTER
