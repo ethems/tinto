@@ -29,6 +29,7 @@ const mongoose = require('./lib/db')(config);
 
 
 // APP ROUTER
+server.use(express.static('public'));
 server.use(config.siteRoot, appRouter(config));
 
 server.listen(config.serverPort, function(error) {
