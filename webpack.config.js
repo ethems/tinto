@@ -4,6 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: [
         'script!jquery/dist/jquery.min.js',
+        'script!material-design-lite/dist/material.min.js',
         './client'
     ],
     externals: {

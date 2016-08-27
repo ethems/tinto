@@ -18,5 +18,6 @@ module.exports = config => {
         res.sendFile(path.join(__dirname, '../../public/index.html'));
     });
 
+
     return appRouter;
 }

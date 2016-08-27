@@ -19,6 +19,7 @@
     "express": "^4.14.0",
     "express-init": "^1.1.0",
     "lodash": "^4.15.0",
+    "material-design-lite": "^1.2.0",
     "moment": "^2.14.1",
     "mongoose": "^4.5.9",
     "morgan": "^1.7.0",
@@ -48,6 +49,7 @@
     "sass-loader": "^4.0.0",
     "script-loader": "^0.7.0",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.2"
   }
 }
