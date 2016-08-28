@@ -1,7 +1,9 @@
+import {ActionType} from './../actions/products-action';
+
 const products = (state = [], action) => {
     switch (action.type) {
-        case 'Fetch_Products':
-            return state;
+        case ActionType.GET_PRODUCTS:
+            return action.payload.data;
         default:
             return state;
     }
