@@ -20,7 +20,7 @@ class PostTable extends Component {
 
       const {products} = this.props;
         return (
-            <div className="mdl-card mdl-shadow--2dp post-table">
+            <div className="post-table">
               <ProductRow products={this.props.products}/>
             </div>
         );

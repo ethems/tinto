@@ -4,9 +4,11 @@ import ReactDOM from 'react-dom';
 import Root from './components/Root';
 import configureStore from './configure-store';
 
+import './style';
 
-require('style!./../node_modules/material-design-lite/dist/material.min.css');
-require('style!./../node_modules/material-design-icons/iconfont/material-icons.css');
+require('style!semantic-ui/dist/semantic.min.css');
+require('style!material-design-lite/dist/material.min.css');
+require('style!material-design-icons/iconfont/material-icons.css');
 
 const store= configureStore();
 

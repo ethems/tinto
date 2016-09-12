@@ -16,7 +16,7 @@ const App = (props) => {
                   <nav className="mdl-navigation wf-nav-drawer__container">
                   </nav>
                 </div>
-                <main className="mdl-layout__content mdl-color--grey-200">
+                <main className="mdl-layout__content mdl-color--blue-grey-50">
                   {props.children}
                 </main>
             </div>

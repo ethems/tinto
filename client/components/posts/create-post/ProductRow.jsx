@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import {connect} from 'react-redux'
-import Autosuggest from 'react-autosuggest';
+import {Textfit} from 'react-textfit';
+
+import ProductSearchBox from './ProductSearchBox';
 
 import './css/product-row.scss';
 
@@ -8,91 +11,85 @@ class ProductRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: '',
-            suggestions: [],
-            selectedProductCode: ''
+            selectedProductCode: "aa",
+            descriptionActive: false,
+            viewMode: false
         };
-        this.onChange = this.onChange.bind(this);
-        this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
-        this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
-        this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
-    }
-    onChange(event, {newValue}) {
-        this.setState({value: newValue});
+        this.handleSelected = this.handleSelected.bind(this);
     }
 
-    getSuggestions(value) {
-        const inputValue = value.trim().toLowerCase();
-        const inputLength = inputValue.length;
-        const {products} = this.props;
-
-        return inputLength === 0
-            ? []
-            : products.filter(prod => prod.name.toLowerCase().slice(0, inputLength) === inputValue);
+    handleSelected(selectedProductCode) {
+        console.log('selected');
+        //this.setState({selectedProductCode});
     }
-    onSuggestionSelected(event, {suggestion, suggestionValue, sectionIndex, method}) {
-        this.setState({selectedProductCode: suggestion.code});
-    }
-
-    onSuggestionsFetchRequested({value}) {
-        this.setState({suggestions: this.getSuggestions(value)});
-    }
-
-    onSuggestionsClearRequested() {
-        this.setState({suggestions: []});
-    }
-
-    render() {
-        const {value, suggestions} = this.state;
-        const getSuggestionValue = suggestion => {
-            return `${suggestion.name}`;
-        }
-        const renderSuggestion = suggestion => {
-            return (
-                <span>
-                    {suggestion.name}
-                </span>
-            );
-        }
-        const inputProps = {
-            placeholder: "Bir urun giriniz",
-            value,
-            onChange: this.onChange
-        }
-        const showContent = (this.state.selectedProductCode !== '')
-            ? true
-            : false;
-
+    _renderSearchContainer(products) {
         return (
-            <div className="product-row">
-                <div className="search-container">
-                    <label className="label">Urun</label>
-                    <Autosuggest onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} onSuggestionSelected={this.onSuggestionSelected} suggestions={suggestions} getSuggestionValue={getSuggestionValue} renderSuggestion={renderSuggestion} inputProps={inputProps}/>
+            <div className={`search-container`}>
+                <ProductSearchBox products={products} onSelected={this.handleSelected}/>
+            </div>
+        )
+    }
+    _renderEditContainer() {
+        const {descriptionActive} = this.state;
+        return (
+            <div className={`edit-container`}>
+                <div className="header">
+                    <div>
+                        <i className="material-icons pointer">close</i>
+                    </div>
+                    <div className="product-name">Domates</div>
                 </div>
-                <div className={showContent
-                    ? ' primary-settings '
-                    : ' primary-settings  hidden'}>
-                    <div className="primary-setting-price">
-                        <label className="label">Fiyat</label>
-                        <input className="primary-setting-price-input"/>
+                <div className="sale-container">
+                    <div className="price-unit">
+                        <div className="price">
+                            <div className="ui  big labeled input">
+                                <div className="ui label">
+                                    &#8378;
+                                </div>
+                                <input type="text" placeholder="Fiyat"/>
+                            </div>
+                        </div>
+                        <div></div>
+                        <div className="unit">
+
+                        </div>
                     </div>
-                    <div className="primary-setting-divider">
-                      /
-                    </div>
-                    <div className="primary-setting-unit">
-                        <label className="label">Birim</label>
-                        <select>
-                          <option>xxx</option>
-                          <option>yyy</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="submit button">
-                  <button>Submit</button>
                 </div>
             </div>
-        );
+        )
+    }
+    _renderViewContainer() {
+        return (
+            <div className={`view-container`}>
+                <div className="price-unit-container mdl-color--light-green-500">
+                    <div className="price">
+                        <Textfit mode="single" perfectFit={true}>
+                            &#8378;3.00
+                        </Textfit>
+                        <div className="unit">
+                            / kasa
+                        </div>
+                    </div>
+                </div>
+                <div className="information-section">information</div>
+            </div>
+        )
+    }
+    render() {
+        const hasProductSelected = !!(this.state.selectedProductCode);
+        const {viewMode} = this.state;
+        const {products} = this.props;
+
+        return (
+            <div className="product-row ui form mdl-color--white mdl-shadow--2dp">
+                {!hasProductSelected
+                    ? this._renderSearchContainer(products)
+                    : viewMode
+                        ? this._renderViewContainer()
+                        : this._renderEditContainer()}
+            </div>
+        )
     }
 }
 
-export default connect(null, null)(ProductRow);
+export default ProductRow;
